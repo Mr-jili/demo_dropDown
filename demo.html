@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>下拉列表</title>
+  <script typet="text/javascript" src="./jquery.min.js"></script>
+  <style>
+    ul,li{
+      list-style: none;
+    }
+    .section_box{
+      display:none;
+      width: 178px;
+      height:250px;
+      overflow-y: auto;
+      border:1px solid #fff;
+      position: absolute;
+        top: 37px;
+        left: 34px;
+        z-index: 9;
+        background: #e9ecef;
+        padding-left: 4px;
+    }
+    .section_outerbox{
+      margin-bottom:5px;
+    }
+    .section_box li{
+      list-style:none;
+    }
+    .section_box ul{
+      margin-left: 0px !important;
+      padding-left: 10px;
+    }
+    .section_box span{
+      line-height: 22px !important;
+    }
+    .black{
+      background:#e9ecef;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="section_outerbox">
+    <div class="half">
+      <span>部门</span> <input type="text" name="" class="section_input" onclick="javascript:openSection(this);"
+        maxlength="0">
+      <ul class="section_box" onclick='javascript:stopPropagation(this);'></ul>
+    </div>
+  </div>
+</body>
+<script src="./index.js"></script>
+<script>
+
+</script>
+
+</html>
