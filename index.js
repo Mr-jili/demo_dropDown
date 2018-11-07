@@ -12,11 +12,39 @@ var struct = function () {
   var structName;
   var parentId;
 };
-listStructMenuTree();
-function listStructMenuTree(obj) {
-  
 
+listStructMenuTree();
+
+function listStructMenuTree(obj) {
+  var data = '';
+  var xhr = new XMLHttpRequest();
+  xhr.open("get", "server.json", false);
+  xhr.onreadystatechange = function () {
+    console.log(xhr.status)
+    if (xhr.readyState == 4 && xhr.status == 200) {
+      data = JSON.parse(xhr.response).data_list;
+    }
+  }
+  if (data == null || data == undefined || data == '') {
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4 && xhr.status == 0) {
+        data = JSON.parse(xhr.response).data_list;
+      }
+    }
+  }
+  xhr.send(null);
+  var data_list = data;
+  for (var i = 0; i < data_list.length; i++) {
+    var notes = new struct();
+    notes.structId = data_list[i].struct_id;
+    notes.structCode = data_list[i].belong_city_code;
+    notes.structName = data_list[i].struct_name;
+    notes.parentId = data_list[i].parent_struct_id;
+    structArray[i] = notes;
+  }
+  html = getStructList(-1);
 }
+
 
 //显示部门
 function getStructList(parentId) {
@@ -122,29 +150,7 @@ function voluation(structId, structCode, structName, obj) {
 function openSection(obj) {
   $('.section_box').css("display", "none");
   $(obj).next('.section_box').css("display", "inline-block");
-  // $(obj).next('.section_box').html(html);
-  var data = '';
-  var xhr = new XMLHttpRequest();
-  xhr.open("get", "server.json", false);
-  xhr.onreadystatechange = function () {
-    console.log(xhr.status)
-    if (xhr.readyState == 4 && xhr.status == 200) {
-      console.log(JSON.parse(xhr.response).data_list);
-      data = JSON.parse(xhr.response).data_list;
-    }
-  }
-  xhr.send(null);
-  var data_list = data;
-      for (var i = 0; i < data_list.length; i++) {
-        var notes = new struct();
-        notes.structId = data_list[i].struct_id;
-        notes.structCode = data_list[i].belong_city_code;
-        notes.structName = data_list[i].struct_name;
-        notes.parentId = data_list[i].parent_struct_id;
-        structArray[i] = notes;
-      }
-      html = getStructList(-1);
-      $(obj).next('.section_box').html(html);
+  $(obj).next('.section_box').html(html);
 }
 
 //点击下拉框判断是否关闭
